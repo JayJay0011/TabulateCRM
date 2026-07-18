@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TabulateCRM Guided Help Demo</title>
+    <style>
+      :root {
+        --bg: #f4f6f8;
+        --ink: #13201b;
+        --muted: #64716d;
+        --line: #d9e1de;
+        --panel: #ffffff;
+        --panel-soft: #edf4f2;
+        --green: #0e7c59;
+        --green-dark: #075d43;
+        --green-soft: #ddf3ea;
+        --blue: #2563eb;
+        --amber: #b76b12;
+        --amber-soft: #fff3dd;
+        --danger: #b84c46;
+        --shadow: 0 24px 60px rgba(19, 32, 27, 0.14);
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      .app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        background: #10211b;
+        color: #eaf7f1;
+        padding: 24px 18px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 26px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        background: var(--green);
+        color: white;
+        font-weight: 900;
+      }
+
+      .nav {
+        display: grid;
+        gap: 6px;
+      }
+
+      .nav button {
+        border: 0;
+        width: 100%;
+        text-align: left;
+        border-radius: 8px;
+        padding: 11px 12px;
+        background: transparent;
+        color: #b9cbc5;
+        cursor: pointer;
+        font-weight: 750;
+      }
+
+      .nav button.active,
+      .nav button:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+      }
+
+      .sidebar-note {
+        color: #9fb4ad;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .main {
+        min-width: 0;
+      }
+
+      .topbar {
+        min-height: 74px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.84);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 26px;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+
+      .crumb {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 750;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 0;
+        font-size: clamp(26px, 4vw, 38px);
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin-bottom: 14px;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      h3 {
+        margin-bottom: 8px;
+        font-size: 15px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .btn {
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        min-height: 38px;
+        border-radius: 8px;
+        padding: 9px 13px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      .btn.primary {
+        background: var(--green);
+        border-color: var(--green);
+        color: #fff;
+      }
+
+      .btn.ghost {
+        background: transparent;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .more-wrap {
+        position: relative;
+      }
+
+      .more-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 46px;
+        width: 220px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        padding: 6px;
+        z-index: 50;
+      }
+
+      .more-menu.open {
+        display: block;
+      }
+
+      .more-menu button {
+        border: 0;
+        background: transparent;
+        width: 100%;
+        text-align: left;
+        border-radius: 7px;
+        padding: 10px 11px;
+        cursor: pointer;
+        color: var(--ink);
+        font-weight: 750;
+      }
+
+      .more-menu button:hover {
+        background: var(--panel-soft);
+      }
+
+      .content {
+        padding: 26px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .notice {
+        border: 1px solid #cfe4dc;
+        background: #f1faf6;
+        border-radius: 8px;
+        padding: 13px 15px;
+        color: #315247;
+        font-size: 14px;
+      }
+
+      .screen {
+        display: none;
+      }
+
+      .screen.active {
+        display: grid;
+        gap: 18px;
+      }
+
+      .estimate-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 14px 32px rgba(19, 32, 27, 0.06);
+      }
+
+      .panel-pad {
+        padding: 18px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        color: #36433f;
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfc;
+        padding: 11px 12px;
+        outline: 0;
+        color: var(--ink);
+      }
+
+      textarea {
+        min-height: 92px;
+        resize: vertical;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--green);
+        box-shadow: 0 0 0 3px rgba(14, 124, 89, 0.13);
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+      }
+
+      .summary-row:last-child {
+        border-bottom: 0;
+        font-weight: 900;
+      }
+
+      .terms {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        margin-top: 14px;
+        color: #374540;
+        font-size: 14px;
+      }
+
+      .terms input {
+        width: auto;
+        margin-top: 3px;
+      }
+
+      .manager-grid {
+        display: grid;
+        grid-template-columns: 360px minmax(0, 1fr);
+        gap: 18px;
+        align-items: start;
+      }
+
+      .guide-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .guide-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 13px;
+        background: #fff;
+      }
+
+      .guide-card.active {
+        border-color: var(--green);
+        background: #f2fbf7;
+      }
+
+      .guide-card strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      .guide-card span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .step-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      .step-table th,
+      .step-table td {
+        border-bottom: 1px solid var(--line);
+        padding: 12px 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .step-table th {
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 5px 9px;
+        background: var(--green-soft);
+        color: var(--green-dark);
+        font-size: 12px;
+        font-weight: 850;
+      }
+
+      .pill.amber {
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .tour-dim {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 18, 14, 0.48);
+        z-index: 90;
+      }
+
+      .tour-highlight {
+        display: none;
+        position: fixed;
+        border: 3px solid #24c58d;
+        border-radius: 10px;
+        box-shadow:
+          0 0 0 9999px rgba(8, 18, 14, 0.45),
+          0 18px 50px rgba(0, 0, 0, 0.24);
+        z-index: 91;
+        pointer-events: none;
+        transition: all 180ms ease;
+      }
+
+      .tour-card {
+        display: none;
+        position: fixed;
+        width: min(340px, calc(100vw - 28px));
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+        z-index: 92;
+        box-shadow: var(--shadow);
+      }
+
+      .tour-card h3 {
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .tour-card p {
+        margin-bottom: 14px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .tour-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .tour-count {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .tour-buttons {
+        display: flex;
+        gap: 8px;
+      }
+
+      .toast {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        display: none;
+        background: #10211b;
+        color: #fff;
+        border-radius: 8px;
+        padding: 12px 14px;
+        box-shadow: var(--shadow);
+        font-size: 14px;
+        z-index: 100;
+      }
+
+      .toast.show {
+        display: block;
+      }
+
+      @media (max-width: 960px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          padding: 14px 16px;
+          grid-template-columns: auto 1fr;
+          grid-template-rows: auto;
+          align-items: center;
+        }
+
+        .nav {
+          display: flex;
+          overflow-x: auto;
+          justify-content: flex-end;
+        }
+
+        .nav button {
+          width: auto;
+          white-space: nowrap;
+        }
+
+        .sidebar-note {
+          display: none;
+        }
+
+        .estimate-layout,
+        .manager-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .topbar {
+          display: grid;
+          gap: 12px;
+          padding: 14px 16px;
+        }
+
+        .actions {
+          flex-wrap: wrap;
+        }
+
+        .content {
+          padding: 16px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .step-table {
+          min-width: 680px;
+        }
+
+        .table-scroll {
+          overflow-x: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="mark">T</span>
+          <span>TabulateCRM</span>
+        </div>
+        <nav class="nav" aria-label="Demo navigation">
+          <button class="active" type="button" data-screen-button="estimate">
+            Create Estimate
+          </button>
+          <button type="button" data-screen-button="manager">Guide Manager</button>
+          <button type="button" data-screen-button="customer">Customer Profile</button>
+        </nav>
+        <p class="sidebar-note">
+          Demo preview only. The real build would be integrated into the
+          existing PHP CRM after inspecting the live page structure.
+        </p>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div>
+            <div class="crumb" id="crumb">Estimates / Create</div>
+            <h1 id="screenTitle">Create Estimate</h1>
+          </div>
+          <div class="actions">
+            <button class="btn" id="autoFillBtn" type="button">Prefill sample</button>
+            <button class="btn primary" id="startTourBtn" type="button">
+              Start guide
+            </button>
+            <div class="more-wrap">
+              <button class="btn ghost" id="moreBtn" type="button">More</button>
+              <div class="more-menu" id="moreMenu">
+                <button type="button" id="helpMenuBtn">Help for this page</button>
+                <button type="button" id="resetTourBtn">Reset guide status</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="notice">
+            This sample shows the buyer the behavior: contextual page help,
+            first-visit completion, Help menu reopen, and admin-managed guide
+            content. It is not the full production source.
+          </div>
+
+          <section class="screen active" id="estimateScreen">
+            <div class="estimate-layout">
+              <article class="panel panel-pad">
+                <h2>Estimate Details</h2>
+                <div class="form-grid">
+                  <div class="field" id="customerField">
+                    <label for="customer">Customer</label>
+                    <select id="customer">
+                      <option>Choose customer</option>
+                      <option selected>Riverside Office Group</option>
+                      <option>Northline Logistics</option>
+                      <option>Greystone Retail</option>
+                    </select>
+                  </div>
+
+                  <div class="field" id="billingField">
+                    <label for="billing">Billing Type</label>
+                    <select id="billing">
+                      <option selected>Fixed project</option>
+                      <option>Hourly</option>
+                      <option>Recurring service</option>
+                    </select>
+                  </div>
+
+                  <div class="field" id="serviceField">
+                    <label for="service">Service</label>
+                    <select id="service">
+                      <option>Choose service</option>
+                      <option selected>CRM onboarding package</option>
+                      <option>Operations workflow setup</option>
+                      <option>Monthly support</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="amount">Estimate Amount</label>
+                    <input id="amount" value="$1,250.00" />
+                  </div>
+
+                  <div class="field full" id="noteField">
+                    <label for="note">Internal Note</label>
+                    <textarea id="note">
+Scope includes setup, testing, and handoff notes for the selected workflow.</textarea
+                    >
+                  </div>
+                </div>
+
+                <label class="terms" id="termsField">
+                  <input type="checkbox" checked />
+                  <span>
+                    Confirm terms and conditions before sending this estimate.
+                  </span>
+                </label>
+              </article>
+
+              <aside class="panel panel-pad">
+                <h2>Estimate Summary</h2>
+                <div class="summary-row">
+                  <span>Customer</span>
+                  <strong>Riverside Office Group</strong>
+                </div>
+                <div class="summary-row">
+                  <span>Service</span>
+                  <strong>CRM onboarding package</strong>
+                </div>
+                <div class="summary-row">
+                  <span>Billing</span>
+                  <strong>Fixed project</strong>
+                </div>
+                <div class="summary-row">
+                  <span>Total</span>
+                  <strong>$1,250.00</strong>
+                </div>
+                <button class="btn primary" id="sendEstimateBtn" type="button">
+                  Send Estimate
+                </button>
+              </aside>
+            </div>
+          </section>
+
+          <section class="screen" id="managerScreen">
+            <div class="manager-grid">
+              <aside class="panel panel-pad">
+                <h2>Guide Manager</h2>
+                <div class="guide-list">
+                  <div class="guide-card active">
+                    <strong>Create Estimate</strong>
+                    <span>6 active steps, shown once per user</span>
+                  </div>
+                  <div class="guide-card">
+                    <strong>Customer Profile</strong>
+                    <span>4 draft steps ready for review</span>
+                  </div>
+                  <div class="guide-card">
+                    <strong>Invoice</strong>
+                    <span>New guide can be added here without rebuilding</span>
+                  </div>
+                </div>
+              </aside>
+
+              <article class="panel panel-pad">
+                <h2>Admin-editable step map</h2>
+                <div class="table-scroll">
+                  <table class="step-table">
+                    <thead>
+                      <tr>
+                        <th>Order</th>
+                        <th>Step</th>
+                        <th>What it opens</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Select Customer</td>
+                        <td>Highlights the customer field on Create Estimate</td>
+                        <td><span class="pill">Active</span></td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Confirm Billing Type</td>
+                        <td>Explains fixed, hourly, or recurring billing</td>
+                        <td><span class="pill">Active</span></td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>Select Service</td>
+                        <td>Shows where the service is selected</td>
+                        <td><span class="pill">Active</span></td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>Add Note</td>
+                        <td>Guides the user on internal estimate notes</td>
+                        <td><span class="pill">Active</span></td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>Confirm Terms</td>
+                        <td>Highlights the confirmation checkbox</td>
+                        <td><span class="pill">Active</span></td>
+                      </tr>
+                      <tr>
+                        <td>6</td>
+                        <td>Send Estimate</td>
+                        <td>Points to the final action button</td>
+                        <td><span class="pill amber">Help menu enabled</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="screen" id="customerScreen">
+            <article class="panel panel-pad">
+              <h2>Customer Profile Guide Preview</h2>
+              <p>
+                This view shows why each page needs different guide content.
+                The tour system is the same, but the customer page would
+                highlight profile details, activity history, notes, and
+                follow-up tasks instead of estimate fields.
+              </p>
+              <div class="form-grid">
+                <div class="field">
+                  <label>Customer Name</label>
+                  <input value="Riverside Office Group" />
+                </div>
+                <div class="field">
+                  <label>Status</label>
+                  <select>
+                    <option>Active</option>
+                    <option>Lead</option>
+                    <option>Inactive</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label>Recent Activity</label>
+                  <textarea>
+Estimate opened, follow-up task created, invoice pending review.</textarea
+                  >
+                </div>
+              </div>
+            </article>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="tour-highlight" id="tourHighlight"></div>
+    <div class="tour-card" id="tourCard" role="dialog" aria-modal="true">
+      <h3 id="tourTitle"></h3>
+      <p id="tourText"></p>
+      <div class="tour-footer">
+        <span class="tour-count" id="tourCount"></span>
+        <div class="tour-buttons">
+          <button class="btn" id="tourBack" type="button">Back</button>
+          <button class="btn" id="tourSkip" type="button">Skip</button>
+          <button class="btn primary" id="tourNext" type="button">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="toast" id="toast">Guide status reset for this demo.</div>
+
+    <script>
+      const guideSteps = {
+        estimate: [
+          {
+            target: "#customerField",
+            title: "Select Customer",
+            text: "Start by choosing the customer this estimate belongs to.",
+          },
+          {
+            target: "#billingField",
+            title: "Confirm Billing Type",
+            text: "Make sure the billing type matches how this work will be charged.",
+          },
+          {
+            target: "#serviceField",
+            title: "Select Service",
+            text: "Pick the service or package that should appear on the estimate.",
+          },
+          {
+            target: "#noteField",
+            title: "Add Note",
+            text: "Add internal context or instructions before the estimate is sent.",
+          },
+          {
+            target: "#termsField",
+            title: "Confirm Terms",
+            text: "Confirm terms and conditions before sending the estimate.",
+          },
+          {
+            target: "#sendEstimateBtn",
+            title: "Send Estimate",
+            text: "Once everything is reviewed, send the estimate to the customer.",
+          },
+        ],
+      };
+
+      const screens = {
+        estimate: {
+          button: document.querySelector('[data-screen-button="estimate"]'),
+          screen: document.querySelector("#estimateScreen"),
+          title: "Create Estimate",
+          crumb: "Estimates / Create",
+        },
+        manager: {
+          button: document.querySelector('[data-screen-button="manager"]'),
+          screen: document.querySelector("#managerScreen"),
+          title: "Guide Manager",
+          crumb: "Settings / Guided Help",
+        },
+        customer: {
+          button: document.querySelector('[data-screen-button="customer"]'),
+          screen: document.querySelector("#customerScreen"),
+          title: "Customer Profile",
+          crumb: "Customers / Riverside Office Group",
+        },
+      };
+
+      const state = {
+        currentScreen: "estimate",
+        activeGuide: null,
+        stepIndex: 0,
+      };
+
+      const els = {
+        screenTitle: document.querySelector("#screenTitle"),
+        crumb: document.querySelector("#crumb"),
+        startTourBtn: document.querySelector("#startTourBtn"),
+        autoFillBtn: document.querySelector("#autoFillBtn"),
+        moreBtn: document.querySelector("#moreBtn"),
+        moreMenu: document.querySelector("#moreMenu"),
+        helpMenuBtn: document.querySelector("#helpMenuBtn"),
+        resetTourBtn: document.querySelector("#resetTourBtn"),
+        highlight: document.querySelector("#tourHighlight"),
+        card: document.querySelector("#tourCard"),
+        tourTitle: document.querySelector("#tourTitle"),
+        tourText: document.querySelector("#tourText"),
+        tourCount: document.querySelector("#tourCount"),
+        tourBack: document.querySelector("#tourBack"),
+        tourSkip: document.querySelector("#tourSkip"),
+        tourNext: document.querySelector("#tourNext"),
+        toast: document.querySelector("#toast"),
+      };
+
+      function switchScreen(name) {
+        Object.values(screens).forEach(({ button, screen }) => {
+          button.classList.remove("active");
+          screen.classList.remove("active");
+        });
+        screens[name].button.classList.add("active");
+        screens[name].screen.classList.add("active");
+        els.screenTitle.textContent = screens[name].title;
+        els.crumb.textContent = screens[name].crumb;
+        state.currentScreen = name;
+        closeTour(false);
+        els.moreMenu.classList.remove("open");
+      }
+
+      function showToast(message) {
+        els.toast.textContent = message;
+        els.toast.classList.add("show");
+        window.setTimeout(() => els.toast.classList.remove("show"), 2200);
+      }
+
+      function tourStorageKey(name) {
+        return `tabulatecrm-guide-complete-${name}`;
+      }
+
+      function startTour(name = state.currentScreen, force = false) {
+        if (!guideSteps[name]) {
+          showToast("This page is ready for guide setup in the manager.");
+          return;
+        }
+
+        if (!force && localStorage.getItem(tourStorageKey(name)) === "true") {
+          showToast("Guide already completed. Use More > Help to reopen it.");
+          return;
+        }
+
+        if (state.currentScreen !== name) {
+          switchScreen(name);
+        }
+
+        state.activeGuide = name;
+        state.stepIndex = 0;
+        renderTourStep();
+      }
+
+      function renderTourStep() {
+        const steps = guideSteps[state.activeGuide];
+        const step = steps[state.stepIndex];
+        const target = document.querySelector(step.target);
+
+        if (!target) {
+          closeTour(false);
+          showToast("The selected guide target is not available on this page.");
+          return;
+        }
+
+        target.scrollIntoView({ block: "center", behavior: "smooth" });
+
+        window.setTimeout(() => {
+          const rect = target.getBoundingClientRect();
+          const pad = 8;
+          els.highlight.style.display = "block";
+          els.highlight.style.left = `${Math.max(rect.left - pad, 8)}px`;
+          els.highlight.style.top = `${Math.max(rect.top - pad, 8)}px`;
+          els.highlight.style.width = `${Math.min(rect.width + pad * 2, window.innerWidth - 16)}px`;
+          els.highlight.style.height = `${rect.height + pad * 2}px`;
+
+          const cardTop =
+            rect.bottom + 18 + 240 < window.innerHeight
+              ? rect.bottom + 18
+              : Math.max(14, rect.top - 244);
+          const cardLeft = Math.min(
+            Math.max(rect.left, 14),
+            window.innerWidth - Math.min(340, window.innerWidth - 28) - 14,
+          );
+
+          els.card.style.display = "block";
+          els.card.style.top = `${cardTop}px`;
+          els.card.style.left = `${cardLeft}px`;
+          els.tourTitle.textContent = step.title;
+          els.tourText.textContent = step.text;
+          els.tourCount.textContent = `${state.stepIndex + 1} of ${steps.length}`;
+          els.tourBack.disabled = state.stepIndex === 0;
+          els.tourNext.textContent =
+            state.stepIndex === steps.length - 1 ? "Finish" : "Next";
+        }, 140);
+      }
+
+      function closeTour(markComplete) {
+        if (markComplete && state.activeGuide) {
+          localStorage.setItem(tourStorageKey(state.activeGuide), "true");
+          showToast("Guide completed. Help menu can reopen it anytime.");
+        }
+        els.highlight.style.display = "none";
+        els.card.style.display = "none";
+        state.activeGuide = null;
+        state.stepIndex = 0;
+      }
+
+      function resetGuide() {
+        localStorage.removeItem(tourStorageKey("estimate"));
+        showToast("Guide status reset for this demo.");
+      }
+
+      Object.entries(screens).forEach(([name, config]) => {
+        config.button.addEventListener("click", () => switchScreen(name));
+      });
+
+      els.startTourBtn.addEventListener("click", () => startTour());
+      els.autoFillBtn.addEventListener("click", () =>
+        showToast("Sample values are already prefilled in this demo."),
+      );
+      els.moreBtn.addEventListener("click", () => {
+        els.moreMenu.classList.toggle("open");
+      });
+      els.helpMenuBtn.addEventListener("click", () => {
+        els.moreMenu.classList.remove("open");
+        startTour(state.currentScreen, true);
+      });
+      els.resetTourBtn.addEventListener("click", () => {
+        els.moreMenu.classList.remove("open");
+        resetGuide();
+      });
+      els.tourBack.addEventListener("click", () => {
+        if (state.stepIndex > 0) {
+          state.stepIndex -= 1;
+          renderTourStep();
+        }
+      });
+      els.tourSkip.addEventListener("click", () => closeTour(false));
+      els.tourNext.addEventListener("click", () => {
+        const steps = guideSteps[state.activeGuide];
+        if (state.stepIndex === steps.length - 1) {
+          closeTour(true);
+          return;
+        }
+        state.stepIndex += 1;
+        renderTourStep();
+      });
+
+      window.addEventListener("resize", () => {
+        if (state.activeGuide) renderTourStep();
+      });
+
+      window.addEventListener("click", (event) => {
+        if (!event.target.closest(".more-wrap")) {
+          els.moreMenu.classList.remove("open");
+        }
+      });
+
+      window.setTimeout(() => startTour("estimate"), 600);
+    </script>
+  </body>
+</html>
